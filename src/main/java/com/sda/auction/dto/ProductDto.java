@@ -10,10 +10,12 @@ public class ProductDto {
     private String description;
     private String category;
     private String startingPrice;
+    private String currentPrice;
     private String minimumBidStep;
     private String startBiddingTime;
     private String endBiddingTime;
     private String base64Image;
+    private String id;
 
 
 }

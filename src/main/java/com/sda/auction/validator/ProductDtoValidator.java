@@ -12,6 +12,7 @@ import java.time.format.DateTimeParseException;
 @Service
 public class ProductDtoValidator {
 
+    // will validate data in controller
     // == public methods ==
     public void validate(ProductDto productDto, BindingResult bindingResult) {
 

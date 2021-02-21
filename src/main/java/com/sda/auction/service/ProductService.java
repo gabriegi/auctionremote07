@@ -38,8 +38,17 @@ public class ProductService {
 
     public List<ProductDto> getProductDtoList() {
         List<Product> productList = productRepository.findAll(); // search for all the products in our repository
-        List<ProductDto> productDtoList = productMapper.map(productList); // we map our productList to productDtoList
-        return productDtoList;
+        return productMapper.map(productList);
+    }
+
+    public Optional<ProductDto> getProductDtoBy(String productId) {
+        Optional<Product> optionalProduct = productRepository.findById(Integer.parseInt(productId)); // search product by id
+        // if optionalProduct is not present we return an empty container
+        if (!optionalProduct.isPresent()) {
+            return Optional.empty();
+        }
+        ProductDto productDto = productMapper.map(optionalProduct.get());
+        return Optional.of(productDto); // return an optional of productDto
     }
 
     // == private methods ==
@@ -51,6 +60,4 @@ public class ProductService {
             product.setSeller(user); // we set the user to the seller
         }
     }
-
-
 }
