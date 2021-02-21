@@ -1,6 +1,6 @@
 package com.sda.auction.config;
 
-import com.sda.service.UserDetailsSecurityService;
+import com.sda.auction.service.UserDetailsSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,38 +13,45 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsSecurityService userDetailsSecurityService;
+    // == fields ==
+    private final UserDetailsSecurityService userDetailsSecurityService;
 
+    // == constructor ==
     @Autowired
-    public SecurityConfig(UserDetailsSecurityService userDetailsSecurityService){
+    public SecurityConfig(UserDetailsSecurityService userDetailsSecurityService) {
         this.userDetailsSecurityService = userDetailsSecurityService;
     }
 
+    // == methods ==
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/static/css/**").permitAll()
+                .antMatchers("/css/**").permitAll()
                 .antMatchers("/aroma-template/**").permitAll()
                 .antMatchers("/addProduct").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/home") // will redirect to home page after login
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login")
                 .permitAll();
+
+    }
+
+    @Autowired
+    public void globalConfig(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userDetailsSecurityService)
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    public void globalConfig(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsSecurityService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

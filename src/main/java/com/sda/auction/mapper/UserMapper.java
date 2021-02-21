@@ -1,7 +1,7 @@
-package com.sda.mapper;
+package com.sda.auction.mapper;
 
-import com.sda.dto.UserDto;
-import com.sda.model.User;
+import com.sda.auction.dto.UserDto;
+import com.sda.auction.model.User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -9,13 +9,16 @@ import java.time.LocalDate;
 @Component
 public class UserMapper {
 
+    // will map the user to the userDto
     public User map(UserDto userDto) {
         User user = new User();
-        user.setFirstName(userDto.getFirstname());
+        user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
         user.setDateOfBirth(LocalDate.parse(userDto.getDateOfBirth()));
-        user.setPassword(userDto.getPassword());
+
+        // returns the mapped user
         return user;
     }
 }

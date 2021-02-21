@@ -1,15 +1,16 @@
-package com.sda.dto;
+package com.sda.auction.dto;
 
 import lombok.Data;
 
 @Data
 public class UserDto {
 
-    private String firstname;
+    // == fields ==
+    private String firstName;
     private String lastName;
     private String email;
-    private String dateOfBirth;
     private String password;
+    private String dateOfBirth;
     private Boolean isAdmin;
 
 

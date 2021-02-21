@@ -1,10 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--Thymeleaf activated-->
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Product Page</title>
+    <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/aroma-template/css/style.css">
+    <link rel="stylesheet" href="css/custom.css">
+
 </head>
+
 <body>
-This is add Product Page
+<!--================ Start Header Menu Area =================-->
+<header class="header_area">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+
+                        <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+
+                        <li class="nav-item"><a href="/myBids" class="nav-link">My Bids</a></li>
+
+                        <li class="nav-item active"><a href="/addProduct" class="nav-link">Add Product</a></li>
+
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    </ul>
+
+                    <ul class="nav-shop">
+                        <li class="nav-item">
+                            <button><i class="ti-search"></i></button>
+                        </li>
+                        <li class="nav-item">
+                            <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
+                        </li>
+                        <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<!--================ End Header Menu Area =================-->
+
+<div class="mainContainer">
+
+    <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
+
+        <!-- Name -->
+        <div class="form-outline mb-4">
+
+            <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" class="form-control" th:field="*{name}" th:errorclass="form-field-error"/>
+
+            <p class="error-message"
+               th:each="error: ${#fields.errors('name')}"
+               th:text="${error}"></p>
+
+        </div>
+
+        <!-- Category -->
+        <div class="form-outline mb-4">
+
+            <option value="">Please choose...</option>
+            <select id="category" class="form-control" th:field="*{category}" >
+
+                <option th:each="category : ${T(com.sda.auction.model.enums.ProductCategory).values()}"
+                        th:value="${category}"
+                        th:text="${#strings.toLowerCase(category)}">
+                </option>
+
+            </select>
+
+            <p class="error-message"
+               th:each="error: ${#fields.errors('category')}"
+               th:text="${error}"></p>
+
+        </div>
+
+        <!-- Description -->
+        <div class="form-outline mb-4">
+            <div class="form-outline">
+                <label class="form-label" for="description">Description</label>
+                <textarea type="text" id="description" class="form-control" th:field="*{description}" th:errorclass="form-field-error"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('description')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+
+            <label class="form-label" for="startingPrice">Starting Bid</label>
+            <input type="number" id="startingPrice" class="form-control" th:field="*{startingPrice}" th:errorclass="form-field-error"/>
+            <p class="error-message"
+               th:each="error: ${#fields.errors('startingPrice')}"
+               th:text="${error}"></p>
+
+        </div>
+
+        <!-- Minimum Bid Step input -->
+        <div class="form-outline mb-4">
+
+            <label class="form-label" for="minimumBidStep">Minimum Bid Step</label>
+            <input type="number" id="minimumBidStep" class="form-control" th:field="*{minimumBidStep}" th:errorclass="form-field-error"/>
+            <p class="error-message"
+               th:each="error: ${#fields.errors('minimumBidStep')}"
+               th:text="${error}"></p>
+
+        </div>
+
+        <!-- Start Bidding Time input -->
+        <div class="form-outline mb-4">
+
+            <label class="form-label" for="startBiddingTime" >Start Bidding Time</label>
+            <input type="datetime-local" id="startBiddingTime" class="form-control" th:field="*{startBiddingTime}" th:errorclass="form-field-error"/>
+            <p class="error-message"
+               th:each="error: ${#fields.errors('startBiddingTime')}"
+               th:text="${error}"></p>
+
+        </div>
+
+        <!-- End Bidding Time input -->
+        <div class="form-outline mb-4">
+
+            <label class="form-label" for="endBiddingTime">End Bidding Time</label>
+            <input type="datetime-local" id="endBiddingTime" class="form-control" th:field="*{endBiddingTime}" th:errorclass="form-field-error"/>
+            <p class="error-message"
+               th:each="error: ${#fields.errors('endBiddingTime')}"
+               th:text="${error}"></p>
+
+        </div>
+
+        <!-- Image input -->
+        <div class="form-outline mb-4">
+
+            <label class="form-label" for="image">Image</label>
+            <input type="file" id="image" name="image" class="form-control" />
+
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Add Product</button>
+
+    </form>
+</div>
 </body>
 </html>

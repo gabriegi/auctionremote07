@@ -1,16 +1,15 @@
-<!DOCTYPE html >
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
+<!DOCTYPE html>
 
-        .mainContainer{
-            width: 600px;
-            margin: 0 auto;
-        }
-    </style>
+<!--Thymeleaf activated-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- Integrate bootstrap   -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
+
 </head>
 <body>
 <div class="mainContainer">
@@ -30,12 +29,21 @@
                     <label class="form-label" for="form3Example2">Last name</label>
                 </div>
             </div>
+            <div class="col">
+                <div class="form-outline">
+                    <input type="date" id="form3Example3" class="form-control" th:field="*{dateOfBirth}"/>
+                    <label class="form-label" for="form3Example2">Date of birth</label>
+                </div>
+            </div>
         </div>
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" id="form3Example3" class="form-control" th:field="*{email}" />
+            <input type="email" id="form3Example3" class="form-control" th:field="*{email}"/>
             <label class="form-label" for="form3Example3">Email address</label>
+            <p class="error-message"
+               th:each="error: ${#fields.errors('email')}"
+               th:text="${error}"></p>
         </div>
 
         <!-- Password input -->
@@ -44,11 +52,11 @@
             <label class="form-label" for="form3Example4">Password</label>
         </div>
 
-
+        <!-- Auction participants and administrator -->
         <div class="form-outline mb-4">
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                       th:value="false" th:field="*{isAdmin}" checked>
+                       th:value="false" th:field="*{isAdmin}">
                 <label class="form-check-label" for="flexRadioDefault1">
                     Auction participant
                 </label>
@@ -61,9 +69,9 @@
                 </label>
             </div>
         </div>
+
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
-
 
     </form>
 </div>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Product</title>
+    <link rel="stylesheet" href="/aroma-template/vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/aroma-template/css/style.css">
+
+</head>
+<body>
+<!--================ Start Header Menu Area =================-->
+<header class="header_area">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+
+                        <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
+
+                        <li class="nav-item"><a href="/myBids" class="nav-link">My Bids</a></li>
+
+                        <li class="nav-item"><a href="/addProduct" class="nav-link">Add Product</a></li>
+
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    </ul>
+
+                    <ul class="nav-shop">
+                        <li class="nav-item">
+                            <button><i class="ti-search"></i></button>
+                        </li>
+                        <li class="nav-item">
+                            <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
+                        </li>
+                        <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<!--================ End Header Menu Area =================-->
+
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <div class="owl-carousel owl-theme s_Product_carousel owl-loaded owl-drag">
+
+                    <div class="owl-stage-outer">
+                        <div class="owl-stage"
+                             style="transform: translate3d(-1080px, 0px, 0px); transition: all 0s ease 0s; width: 2700px;">
+                            <div class="owl-item cloned" style="width: 540px;">
+                                <div class="single-prd-item">
+                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="owl-item cloned" style="width: 540px;">
+                                <div class="single-prd-item">
+                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="owl-item active" style="width: 540px;">
+                                <div class="single-prd-item">
+                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="owl-item cloned" style="width: 540px;">
+                                <div class="single-prd-item">
+                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="owl-item cloned" style="width: 540px;">
+                                <div class="single-prd-item">
+                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-nav disabled">
+                        <button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span>
+                        </button>
+                        <button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span>
+                        </button>
+                    </div>
+                    <div class="owl-dots disabled"></div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3 th:text="${product.name}"></h3>
+                    <h2 th:text="'$' + ${product.startingPrice}"></h2>
+                    <ul class="list">
+                        <li><a class="active" href="#">
+                            <span>Category </span>
+                            <span th:text="': ' + ${product.category}"></span>
+                        </a></li>
+                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+                    </ul>
+                    <p th:text="${product.description}"></p>
+                    <div class="product_count">
+                        <label for="qty">Quantity:</label>
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
+                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
+                               class="input-text qty">
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
+                        <a class="button primary-btn" href="#">Add to Cart</a>
+                    </div>
+                    <div class="card_area d-flex align-items-center">
+                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+

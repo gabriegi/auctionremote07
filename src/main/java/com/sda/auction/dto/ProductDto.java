@@ -1,10 +1,11 @@
-package com.sda.dto;
+package com.sda.auction.dto;
 
 import lombok.Data;
 
 @Data
 public class ProductDto {
 
+    // == fields ==
     private String name;
     private String description;
     private String category;
@@ -12,4 +13,7 @@ public class ProductDto {
     private String minimumBidStep;
     private String startBiddingTime;
     private String endBiddingTime;
+    private String base64Image;
+
+
 }

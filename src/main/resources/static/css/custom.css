@@ -1,4 +1,23 @@
 .mainContainer {
-    width: 600px;
-    margin: 0 auto;
+    width: 800px;
+    margin: 5px auto;
 }
+
+select option {
+    text-transform: capitalize;
+}
+
+.error-message {
+    margin: 1px;
+    padding: 6px;
+    background-color: #ff726f;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+
+.form-field-error {
+    border: 1px solid red;
+}
+
+
