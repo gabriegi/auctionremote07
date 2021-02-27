@@ -25,18 +25,25 @@ public class BidValidator {
     }
 
     // == public methods ==
-    //todo - make the validations
     public void validate(String productId, BidDto bidDto, BindingResult bindingResult) {
         Optional<Product> optionalProduct = productRepository.findById(Integer.valueOf(productId));
         if (!optionalProduct.isPresent()) {
             bindingResult.addError(new FieldError("bidDto", "value", "Invalid product Id"));
             return;
         }
+
         validateBidValue(bidDto, bindingResult, optionalProduct.get());
+
     }
 
     // == private methods ==
     private void validateBidValue(BidDto bidDto, BindingResult bindingResult, Product product) {
+
+        if (isBidValueNotNumber(bidDto)) {
+            bindingResult.addError(new FieldError("bidDto", "value", "This field should be a number."));
+            return;
+        }
+
         Optional<Bid> optionalMaxBid = getMaxBid(product);
         int bidDtoValue = Integer.parseInt(bidDto.getValue());
         int productCurrentPrice = product.getStartingPrice(); // variable to store the currentPrice
@@ -62,9 +69,17 @@ public class BidValidator {
     }
 
     private Optional<Bid> getMaxBid(Product product) {
-        Optional<Bid> optionalMaxBid = product.getBidList() // gets the BidList
+        return product.getBidList() // gets the BidList
                 .stream() // created stream with max method
-                .max(Comparator.comparing(Bid::getValue)); // compares each element to find the max value ( using the value from the Dto)
-        return optionalMaxBid;
+                .max(Comparator.comparing(Bid::getValue));
+    }
+
+    private boolean isBidValueNotNumber(BidDto value) {
+        try {
+            Integer.parseInt(value.getValue());
+        } catch (NumberFormatException numberFormatException) {
+            return true;
+        }
+        return false;
     }
 }

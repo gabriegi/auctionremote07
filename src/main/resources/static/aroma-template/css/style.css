@@ -4266,7 +4266,7 @@ a {
 }
 
 .s_product_text .list li a span {
-    width: 90px;
+    width: 140px;
     display: inline-block;
     color: #555555
 }
@@ -4364,7 +4364,7 @@ a {
 
 .product_count input {
     width: 76px;
-    border: 1px solid #eeeeee;
+    border: 1px solid #495057;
     border-radius: 3px;
     padding-left: 10px
 }
@@ -4779,4 +4779,10 @@ a {
         padding-top: 115px !important;
         padding-bottom: 115px !important
     }
+}
+
+.card-img {
+    height: 210px;
+    width: 100%;
+    border-radius: calc(.25rem - 1px);
 }

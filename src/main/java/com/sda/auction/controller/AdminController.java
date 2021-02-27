@@ -1,7 +1,9 @@
 package com.sda.auction.controller;
 
 import com.sda.auction.dto.ProductDto;
+import com.sda.auction.dto.UserHeaderDto;
 import com.sda.auction.service.ProductService;
+import com.sda.auction.service.UserService;
 import com.sda.auction.validator.ProductDtoValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +23,26 @@ public class AdminController {
     // == fields ==
     private final ProductDtoValidator productDtoValidator;
     private final ProductService productService;
+    private final UserService userService;
 
     // == constructor ==
     @Autowired
-    public AdminController(ProductDtoValidator productDtoValidator, ProductService productService) {
+    public AdminController(ProductDtoValidator productDtoValidator, ProductService productService,
+                           UserService userService) {
         this.productDtoValidator = productDtoValidator;
         this.productService = productService;
+        this.userService = userService;
     }
 
-    // == methods ==
+    // == mapping methods ==
     @GetMapping("/addProduct")
-    public String getAddProduct(Model model) {
+    public String getAddProduct(Model model, Authentication authentication) {
         log.info("getAddProduct called");
         model.addAttribute("productDto", new ProductDto());
+
+        UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
+        model.addAttribute("userHeaderDto", userHeaderDto);
+
         return "addProduct";
     }
 

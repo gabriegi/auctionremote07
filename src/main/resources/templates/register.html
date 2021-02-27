@@ -4,7 +4,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
+    <title>Register Page</title>
     <!-- Integrate bootstrap   -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -39,7 +39,7 @@
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" id="form3Example3" class="form-control" th:field="*{email}"/>
+            <input type="email" id="form3Example4" class="form-control" th:field="*{email}"/>
             <label class="form-label" for="form3Example3">Email address</label>
             <p class="error-message"
                th:each="error: ${#fields.errors('email')}"
@@ -48,7 +48,7 @@
 
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input type="password" id="form3Example4" class="form-control" th:field="*{password}"/>
+            <input type="password" id="form3Example5" class="form-control" th:field="*{password}"/>
             <label class="form-label" for="form3Example4">Password</label>
         </div>
 

@@ -1,0 +1,4 @@
+DTO is a pattern and it is implementation (POJO/POCO) independent.
+DTO says, since each call to any remote interface is expensive, response to each call should bring as much data as possible.
+So, if multiple requests are required to bring data for a particular task,
+data to be brought can be combined in a DTO so that only one request can bring all the required data

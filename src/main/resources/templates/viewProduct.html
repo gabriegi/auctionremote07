@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="/aroma-template/vendors/owl-carousel/owl.carousel.min.css">
 
     <link rel="stylesheet" href="/aroma-template/css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
 
 </head>
 <body>
@@ -34,23 +36,31 @@
 
                         <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
 
-                        <li class="nav-item"><a href="/myBids" class="nav-link">My Bids</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')"><a href="/myBids" class="nav-link">My
+                            Bids</a></li>
 
-                        <li class="nav-item"><a href="/addProduct" class="nav-link">Add Product</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a href="/addProduct" class="nav-link">Add
+                            Product</a></li>
 
-                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link"
+                                                                              href="/register">Register</a></li>
 
-                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+
                     </ul>
 
-                    <ul class="nav-shop">
+                    <ul class="nav-shop" sec:authorize="isAuthenticated()">
                         <li class="nav-item">
                             <button><i class="ti-search"></i></button>
                         </li>
                         <li class="nav-item">
                             <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
                         </li>
-                        <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+
+                        <li>
+                            <p>Hello, <span th:text="${userHeaderDto.firstName}"></span></p>
+                        </li>
+
+                        <li class="nav-item"><a class="button button-header" href="/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,73 +73,61 @@
     <div class="container">
         <div class="row s_product_inner">
             <div class="col-lg-6">
-                <div class="owl-carousel owl-theme s_Product_carousel owl-loaded owl-drag">
-
-                    <div class="owl-stage-outer">
-                        <div class="owl-stage"
-                             style="transform: translate3d(-1080px, 0px, 0px); transition: all 0s ease 0s; width: 2700px;">
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item active" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="owl-item cloned" style="width: 540px;">
-                                <div class="single-prd-item">
-                                    <img class="img-fluid" src="aroma-template/img/category/s-p1.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-nav disabled">
-                        <button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span>
-                        </button>
-                        <button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span>
-                        </button>
-                    </div>
-                    <div class="owl-dots disabled"></div>
-                </div>
+                <img class="img-fluid main-photo" th:src="${'data:image/png;base64,' + product.base64Image}" alt="">
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3 th:text="${product.name}"></h3>
-                    <h2 th:text="'$' + ${product.startingPrice}"></h2>
+                    <h2 th:text="'Current price $' + ${product.currentPrice}"></h2>
                     <ul class="list">
+
                         <li><a class="active" href="#">
-                            <span>Category </span>
-                            <span th:text="': ' + ${product.category}"></span>
+                            <span>Category</span>
+                            <span th:text="': '+${product.category}"></span>
                         </a></li>
-                        <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+
+                        <li><a href="#"><span>Starting price</span>
+                            <span th:text="': $'+${product.startingPrice}"></span>
+                        </a></li>
+
+                        <li><a href="#"><span>Auction ends at</span>
+                            <span th:text="': '+${product.endBiddingTime}"></span>
+                        </a></li>
+
+                        <li><a href="#"><span>Your maximum bid</span>
+                            <span th:text="': $'+${product.userMaximumBid}"></span>
+                        </a></li>
+
                     </ul>
-                    <p th:text="${product.description}"></p>
-                    <div class="product_count">
-                        <label for="qty">Quantity:</label>
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-                        <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
-                               class="input-text qty">
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-                        <a class="button primary-btn" href="#">Add to Cart</a>
+                    <p class="description-box" th:text="${product.description}"></p>
+
+                    <!--                    <p class="error-message"-->
+                    <!--                       th:each="error: ${#fields.errors('generic')}"-->
+                    <!--                       th:text="${error}"></p>-->
+
+                    <div class="product_count"
+                         th:if="${product.userMaximumBid != product.currentPrice && !product.winnerAssigned}">
+                        <form th:action="@{/viewProduct/{id}(id=${product.id})}" method="post" th:object="${bidDto}">
+                            <label for="qty">Your Bid value:</label>
+                            <input type="text" name="qty" id="qty" size="2" maxlength="12" class="input-text qty"
+                                   th:field="*{value}">
+                            <input class="bid-button" type="submit" value="Place Bid">
+
+                            <p class="error-message-product"
+                               th:each="error: ${#fields.errors('value')}"
+                               th:text="${error}"></p>
+
+                        </form>
                     </div>
-                    <div class="card_area d-flex align-items-center">
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+
+                    <div class="product_count" th:if="${product.userMaximumBid == product.currentPrice && !product.winnerAssigned}">
+                        <p>You are currently winning the auction for this product !!!</p>
                     </div>
+
+                    <div class="product_count" th:if="${product.winnerAssigned}">
+                        <p>The auction for this product is over !</p>
+                    </div>
+
                 </div>
             </div>
         </div>

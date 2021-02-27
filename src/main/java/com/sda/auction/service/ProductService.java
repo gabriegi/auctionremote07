@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,20 +37,32 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public List<ProductDto> getProductDtoList() {
+    public List<ProductDto> getProductDtoList(String authenticatedUserEmail) {
         List<Product> productList = productRepository.findAll(); // search for all the products in our repository
-        return productMapper.map(productList);
+        return productMapper.map(productList, authenticatedUserEmail);
     }
 
-    public Optional<ProductDto> getProductDtoBy(String productId) {
+    public List<ProductDto> getActiveProductDtoList(String authenticatedUserEmail) {
+        List<Product> productList = productRepository.findAllActive(LocalDateTime.now());
+        return productMapper.map(productList, authenticatedUserEmail);
+    }
+
+    public List<ProductDto> getProductDtoListByBidder(String authenticatedUserEmail) {
+        List<Product> productList = productRepository.findAllByBidder(authenticatedUserEmail);
+        return productMapper.map(productList, authenticatedUserEmail);
+    }
+
+    public Optional<ProductDto> getProductDtoBy(String productId, String authenticatedUserEmail) {
         Optional<Product> optionalProduct = productRepository.findById(Integer.parseInt(productId)); // search product by id
         // if optionalProduct is not present we return an empty container
         if (!optionalProduct.isPresent()) {
             return Optional.empty();
         }
-        ProductDto productDto = productMapper.map(optionalProduct.get());
+        ProductDto productDto = productMapper.map(optionalProduct.get(), authenticatedUserEmail);
         return Optional.of(productDto); // return an optional of productDto
     }
+
+
 
     // == private methods ==
     private void assignSeller(String loggedUserEmail, Product product) {
@@ -60,4 +73,7 @@ public class ProductService {
             product.setSeller(user); // we set the user to the seller
         }
     }
+
+
+
 }
