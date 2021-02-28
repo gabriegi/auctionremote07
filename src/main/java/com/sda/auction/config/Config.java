@@ -8,7 +8,6 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 @Configuration
 public class Config {
 
-
     // this Bean will set the path to our html from templates
     // View Resolver
     @Bean
@@ -21,7 +20,4 @@ public class Config {
         resolver.setCacheable(false);
         return resolver;
     }
-
-
-
 }
