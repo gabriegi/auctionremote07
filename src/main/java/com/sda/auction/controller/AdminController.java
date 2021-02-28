@@ -51,7 +51,12 @@ public class AdminController {
                                  Authentication authentication, @RequestParam("image") MultipartFile multipartFile) {
         System.out.println(multipartFile);
         String loggedUserEmail = authentication.getName();
+
+        UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
+        model.addAttribute("userHeaderDto", userHeaderDto);
+
         productDtoValidator.validate(productDto, bindingResult);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("productDto", productDto);
             return "addProduct";
