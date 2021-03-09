@@ -49,15 +49,14 @@ public class AdminController {
     @PostMapping("/addProduct")
     public String postAddProduct(Model model, ProductDto productDto, BindingResult bindingResult,
                                  Authentication authentication, @RequestParam("image") MultipartFile multipartFile) {
-        System.out.println(multipartFile);
+
         String loggedUserEmail = authentication.getName();
-
-        UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
-        model.addAttribute("userHeaderDto", userHeaderDto);
-
         productDtoValidator.validate(productDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
+            model.addAttribute("userHeaderDto", userHeaderDto);
+
             model.addAttribute("productDto", productDto);
             return "addProduct";
         }

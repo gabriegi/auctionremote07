@@ -44,12 +44,6 @@
                     </ul>
 
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
-                        <li class="nav-item">
-                            <button><i class="ti-search"></i></button>
-                        </li>
-                        <li class="nav-item">
-                            <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
-                        </li>
                         <li>
                             <p>Hello, <span th:text="${userHeaderDto.firstName}"></span></p>
                         </li>
@@ -65,8 +59,8 @@
 <section class="section-margin calc-60px">
     <div class="container">
         <div class="section-intro pb-60px">
-            <p>Popular Item in the market</p>
-            <h2>Trending <span class="section-intro__style">Product</span></h2>
+            <p>Items available in the list</p>
+            <h2>Available <span class="section-intro__style">Products</span></h2>
         </div>
         <div class="row">
             <!-- we need to generate div's as this for each product in our DB-->

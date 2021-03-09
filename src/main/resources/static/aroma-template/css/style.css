@@ -6,7 +6,8 @@ body {
     font-family: "Roboto", sans-serif;
     font-size: 15px;
     font-weight: 400;
-    line-height: 1.667
+    line-height: 1.667;
+
 }
 
 ul {
@@ -134,7 +135,7 @@ a {
     width: 100%;
     z-index: 9999;
     transition: background 0.4s, all 0.3s linear;
-    box-shadow: 0px 10px 27px 3px rgba(221, 221, 221, 0.3)
+    box-shadow: 0px 10px 27px 3px rgba(149 200 255)
 }
 
 .header_area .navbar {
@@ -4286,11 +4287,9 @@ a {
 
 .s_product_text p {
     padding-top: 20px;
-    border-top: 1px dotted #eeeeee;
-    border-bottom: 1px dotted #eeeeee;
-    margin-top: 20px;
-    padding-bottom: 26px;
-    margin-bottom: 0
+    margin-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .s_product_text .card_area {
@@ -4364,9 +4363,12 @@ a {
 
 .product_count input {
     width: 76px;
-    border: 1px solid #495057;
+    border: 1px #495057;
     border-radius: 3px;
-    padding-left: 10px
+    padding-left: 10px;
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         1px 2px 3px 4px #ccc;
 }
 
 .product_count button {

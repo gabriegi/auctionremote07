@@ -7,4 +7,5 @@ public class BidDto {
 
     private String value;
     private String generic;
+
 }
