@@ -85,6 +85,10 @@ public class HomeController {
         bidValidator.validate(productId, bidDto, bindingResult);
         Optional<ProductDto> optionalProductDto = productService.getProductDtoBy(productId, authentication.getName());
         if (bindingResult.hasErrors()) {
+
+            UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
+            model.addAttribute("userHeaderDto", userHeaderDto);
+
             model.addAttribute("bidDto", bidDto);
             model.addAttribute("product", optionalProductDto.get());
             return "viewProduct";

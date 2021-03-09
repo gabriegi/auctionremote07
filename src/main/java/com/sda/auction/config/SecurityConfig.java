@@ -29,15 +29,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .antMatchers("/aroma-template/**").permitAll()
+                .antMatchers("/gif/**").permitAll()
                 .antMatchers("/addProduct").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/home") // will redirect to home page after login
                 .and()
+//                .rememberMe()
+//                    .key("rem-me-key")
+//                    .rememberMeParameter("remember") // it is the name of the checkbox
+//                    .rememberMeCookieName("remember-me-cookie") // remember-me-cookie must be same as deleteCookie
+//                    .tokenValiditySeconds(6000)
+//                    .and()
                 .logout()
+//                    .deleteCookies("remember-me-cookie")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login")
                 .permitAll();

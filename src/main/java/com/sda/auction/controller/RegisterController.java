@@ -36,6 +36,14 @@ public class RegisterController {
         return "register";
     }
 
+    @GetMapping("/login")
+    public String getLoginPage(Model model, UserDto userDto) {
+        log.info("getLoginPage called");
+        model.addAttribute("userDto", userDto);
+        return "login";
+    }
+
+
     @PostMapping("/register")                 // BindingResult - will collect our errors
     public String postRegisterPage(Model model, UserDto userDto, BindingResult bindingResult) {
         log.info("postRegisterPage called");

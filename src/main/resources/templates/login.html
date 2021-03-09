@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <title>Login/Register</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/aroma-template/vendors/fontawesome/css/all.min.css">
+
+</head>
+<body>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img th:src="@{images/auction-law.png}" class="img-responsive center-block"
+                 id="icon" alt="User Icon"/>
+        </div>
+
+        <!-- Login Form -->
+        <form th:action="@{/login}" method="post" th:src="@{images/auction-law.png}">
+
+            <!-- User-->
+            <div class="user-show-card text">
+                <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+                <span><i class="fadeIn fas fa-user user-show"></i></span>
+            </div>
+
+            <!-- Password -->
+            <div class="password-show-card text">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+                <span><i class="fadeIn fas fa-eye password-show"
+                         aria-hidden="true"></i></span>
+
+            </div>
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+
+        <!-- Remember Account and  Register -->
+        <div id="formFooter">
+            <label>
+                <input name="remember_me" id="remember_me" type="checkbox" value="Remember Me"> Remember me
+            </label><br>
+            <a class="underlineHover" th:href="@{/register}">Register</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/toggle_password.js"></script>
+</body>
+</html>
