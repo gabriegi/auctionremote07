@@ -45,6 +45,7 @@ public class ProductDtoValidator {
         }
     }
 
+    // will validate so the name field cant be empty
     private void validateName(String name, BindingResult bindingResult) {
         if (name.isEmpty()) {
             bindingResult.addError(
@@ -60,7 +61,7 @@ public class ProductDtoValidator {
         validateFieldAsPositiveInteger("minimumBidStep", minimumBidStep, bindingResult);
     }
 
-    // generic method to validate number
+    // generic method to validate number, will validate the number to be positive and input to always be a integer
     private void validateFieldAsPositiveInteger(String fieldName, String fieldValue, BindingResult bindingResult) {
         try {
             Integer fieldValueAsInteger = Integer.parseInt(fieldValue);

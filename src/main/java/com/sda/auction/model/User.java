@@ -16,8 +16,10 @@ public class User {
 
     private String firstName;
     private String lastName;
+
     private String email;
     private String password;
+
     private LocalDate dateOfBirth;
 
     // == relationships ==
@@ -32,4 +34,5 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "winner")
     private List<Product> wonProductList;
+
 }

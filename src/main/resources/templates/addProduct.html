@@ -39,26 +39,19 @@
 
                         <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
 
-                        <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')"><a href="/myBids" class="nav-link">My
-                            Bids</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN') || hasRole('PARTICIPANT')">
+                            <a href="/myBids" class="nav-link">My Bids</a></li>
 
-                        <li class="nav-item active" sec:authorize="hasRole('ADMIN')"><a href="/addProduct"
-                                                                                        class="nav-link">Add Product</a>
+                        <li class="nav-item active" sec:authorize="hasRole('ADMIN')">
+                            <a href="/addProduct" class="nav-link">Add Product</a>
                         </li>
 
-                        <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link"
-                                                                              href="/register">Register</a></li>
-
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" href="/register">Register</a></li>
 
                     </ul>
 
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
-                        <li class="nav-item">
-                            <button><i class="ti-search"></i></button>
-                        </li>
-                        <li class="nav-item">
-                            <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
-                        </li>
                         <li>
                             <p>Hello, <span th:text="${userHeaderDto.firstName}"></span></p>
                         </li>

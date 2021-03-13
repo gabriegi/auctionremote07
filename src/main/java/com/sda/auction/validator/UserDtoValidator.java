@@ -23,7 +23,6 @@ public class UserDtoValidator {
     }
 
     // == public methods ==
-    //TODO - more validations
     //this method will validate the data
     public void validate(UserDto userDto, BindingResult bindingResult) {
         // will check if the email already exist

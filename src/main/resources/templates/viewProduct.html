@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -36,7 +36,7 @@
 
                         <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
 
-                        <li class="nav-item" sec:authorize="hasRole('PARTICIPANT')"><a href="/myBids" class="nav-link">My
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN') || hasRole('PARTICIPANT')"><a href="/myBids" class="nav-link">My
                             Bids</a></li>
 
                         <li class="nav-item" sec:authorize="hasRole('ADMIN')"><a href="/addProduct" class="nav-link">Add
@@ -45,16 +45,9 @@
                         <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link"
                                                                               href="/register">Register</a></li>
 
-
                     </ul>
 
                     <ul class="nav-shop" sec:authorize="isAuthenticated()">
-                        <li class="nav-item">
-                            <button><i class="ti-search"></i></button>
-                        </li>
-                        <li class="nav-item">
-                            <button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button>
-                        </li>
 
                         <li>
                             <p>Hello, <span th:text="${userHeaderDto.firstName}"></span></p>
@@ -120,8 +113,11 @@
                         </form>
                     </div>
 
-                    <div class="product_count" th:if="${product.userMaximumBid == product.currentPrice && !product.winnerAssigned}">
+                    <div th:if="${product.userMaximumBid == product.currentPrice && !product.winnerAssigned}">
                         <p>You are currently winning the auction for this product !!!</p>
+                        <form th:action="@{/removeBid/{id}(id=${product.id})}" method="post">
+                            <button class="btn btn-secondary" type="submit">Remove bid</button>
+                        </form>
                     </div>
 
                     <div class="product_count" th:if="${product.winnerAssigned}">

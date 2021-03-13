@@ -6,5 +6,6 @@ import lombok.Data;
 public class UserHeaderDto {
 
     private String firstName;
+    private String id;
 
 }

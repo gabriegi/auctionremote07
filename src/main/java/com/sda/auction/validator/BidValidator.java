@@ -39,6 +39,7 @@ public class BidValidator {
     // == private methods ==
     private void validateBidValue(BidDto bidDto, BindingResult bindingResult, Product product) {
 
+        // if the user input not number will throw this error
         if (isBidValueNotNumber(bidDto)) {
             bindingResult.addError(new FieldError("bidDto", "value", "This field should be a number."));
             return;
@@ -47,6 +48,8 @@ public class BidValidator {
         Optional<Bid> optionalMaxBid = getMaxBid(product);
         int bidDtoValue = Integer.parseInt(bidDto.getValue());
         int productCurrentPrice = product.getStartingPrice(); // variable to store the currentPrice
+        int bidDtoStep = product.getMinimumBidStep();
+
         boolean isError = false;
         String errorMessage = null;
 
@@ -56,12 +59,16 @@ public class BidValidator {
                 isError = true;
                 errorMessage = "Value is smaller than the last bid!";
             }
-        } else {
-            if (bidDtoValue < productCurrentPrice) {
-                isError = true;
-                errorMessage = "Value is smaller than the starting price!";
-            }
+        } else if (bidDtoValue < productCurrentPrice) {
+            isError = true;
+            errorMessage = "Value is smaller than the starting price!";
+
+        //todo create validation for minimBidStep
+        } else if (bidDtoValue < bidDtoStep) {
+            isError = true;
+            errorMessage = "Value is smaller than minimum bid step for this product.";
         }
+
         if (isError) {
             bindingResult.addError(new FieldError("bidDto", "value", errorMessage));
         }
@@ -71,9 +78,10 @@ public class BidValidator {
     private Optional<Bid> getMaxBid(Product product) {
         return product.getBidList() // gets the BidList
                 .stream() // created stream with max method
-                .max(Comparator.comparing(Bid::getValue));
+                .max(Comparator.comparing(Bid::getValue)); // will compare each bid and returns the maximum value
     }
 
+    // validate input so the user always introduces numbers
     private boolean isBidValueNotNumber(BidDto value) {
         try {
             Integer.parseInt(value.getValue());
@@ -82,4 +90,6 @@ public class BidValidator {
         }
         return false;
     }
+
+
 }
