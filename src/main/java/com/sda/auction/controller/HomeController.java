@@ -3,6 +3,7 @@ package com.sda.auction.controller;
 import com.sda.auction.dto.BidDto;
 import com.sda.auction.dto.ProductDto;
 import com.sda.auction.dto.UserHeaderDto;
+import com.sda.auction.model.enums.ProductCategory;
 import com.sda.auction.service.BidService;
 import com.sda.auction.service.ProductService;
 import com.sda.auction.service.UserService;
@@ -17,7 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,12 +48,32 @@ public class HomeController {
 
     // == mapping methods ==
     @GetMapping("/home")
-    public String getHomePage(Model model, Authentication authentication) {
+    public String getHomePage(Model model, Authentication authentication, HttpServletRequest request) {
         log.info("getHomePage called");
+        boolean categoryExists = true;
+        String category = "";
 
+        try {
+            category = request.getParameter("category").toUpperCase();
+        } catch (NullPointerException e) {
+            categoryExists = false;
+        }
+
+        ProductCategory categoryId = ProductCategory.valueOf("HOME");
+
+        try {
+            categoryId = ProductCategory.valueOf(category);
+        } catch(IllegalArgumentException e) {
+            categoryExists = false;
+        }
         List<ProductDto> productDtoList = productService.getActiveProductDtoList(authentication.getName());
-        model.addAttribute("productDtoList", productDtoList);
 
+        if(categoryExists) {
+           productDtoList = productService.getFilteredProductDtoList(authentication.getName(), categoryId);
+        }
+
+        model.addAttribute("productDtoList", productDtoList);
+        model.addAttribute("productDto", new ProductDto());
         UserHeaderDto userHeaderDto = userService.getUserHeaderDto(authentication.getName());
         model.addAttribute("userHeaderDto", userHeaderDto);
 

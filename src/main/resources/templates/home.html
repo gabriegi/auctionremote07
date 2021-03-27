@@ -56,11 +56,22 @@
 </header>
 <!--================ End Header Menu Area =================-->
 
-<section class="section-margin calc-60px">
+<section class="section-margin calc-60px" th:object="${productDto}">
     <div class="container">
         <div class="section-intro pb-60px">
             <p>Items available in the auction</p>
-            <h2>Trending <span class="section-intro__style">Products</span></h2>
+            <h2>Trending <span class="section-intro__style">Products</span></h2><br />
+            <label for="category">Select a category</label>
+            <select onchange="addCategory()" id="category" class="form-control" th:field="*{category}">
+                <option value="" selected>Please Choose</option>
+                <option
+                        th:each="category : ${T(com.sda.auction.model.enums.ProductCategory).values()}"
+                        th:value="${category}"
+                        th:text="${#strings.toLowerCase(category)}"
+                >
+                </option>
+
+            </select>
         </div>
         <div class="row">
             <!-- we need to generate div's as this for each product in our DB-->
@@ -79,6 +90,23 @@
         </div>
     </div>
 </section>
+
+<script>
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let category = urlParams.get('category').toUpperCase();
+
+        if(category) {
+            document.getElementById('category').value = category;
+        }
+
+    })();
+
+    function addCategory() {
+        let categoryName = document.getElementById('category').value.toLowerCase();
+        window.location.replace(window.location.origin + '/home' + '?category=' + categoryName)
+    }
+</script>
 </body>
 
 </html>

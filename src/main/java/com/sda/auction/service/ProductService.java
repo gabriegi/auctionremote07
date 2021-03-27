@@ -4,6 +4,7 @@ import com.sda.auction.dto.ProductDto;
 import com.sda.auction.mapper.ProductMapper;
 import com.sda.auction.model.Product;
 import com.sda.auction.model.User;
+import com.sda.auction.model.enums.ProductCategory;
 import com.sda.auction.repository.ProductRepository;
 import com.sda.auction.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ public class ProductService {
 
     public List<ProductDto> getActiveProductDtoList(String authenticatedUserEmail) {
         List<Product> productList = productRepository.findAllActive(LocalDateTime.now());
+        return productMapper.map(productList, authenticatedUserEmail);
+    }
+
+    public List<ProductDto> getFilteredProductDtoList(String authenticatedUserEmail, ProductCategory category) {
+        List<Product> productList = productRepository.filterAllActive(LocalDateTime.now(), category);
         return productMapper.map(productList, authenticatedUserEmail);
     }
 

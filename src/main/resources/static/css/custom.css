@@ -117,3 +117,7 @@ select option {
     background-color: #f3f3f3;
     text-align: right;
 }
+
+.capitalized {
+    text-transform: capitalize;
+}
